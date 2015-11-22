@@ -8,6 +8,7 @@ public class PortTester {
 	public static void main(String[] args) {
 		PortTesterFrame frame = new PortTesterFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Port Tester");
 		frame.setVisible(true);
 	}
 }
@@ -16,6 +17,8 @@ class PortTesterFrame extends JFrame {
 	
 	public PortTesterFrame() {
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		setResizable(false);
+		setLocationByPlatform(true);
 	}
 	
 	public static final int DEFAULT_WIDTH = 400;
