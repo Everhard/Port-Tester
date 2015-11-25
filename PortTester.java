@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.*;
+import java.awt.font.*;
 
 /*
  * PortTester - GUI network tool for testing TCP-ports
@@ -40,15 +42,21 @@ class HeaderComponent extends JComponent {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
+		String message = "Port Tester";
+		
 		/*
 		 * Set font:
 		 */
 		Font headerFont = new Font("Helvetica", Font.PLAIN, 24);
 		g2.setFont(headerFont);
 		
-		g2.drawString("Port Tester", MESSAGE_X, MESSAGE_Y);
+		FontRenderContext context = g2.getFontRenderContext();
+		Rectangle2D bounds = headerFont.getStringBounds(message, context);
+		
+		int paddingX = (int) (getWidth() - bounds.getWidth()) / 2;
+		
+		g2.drawString(message, paddingX, MESSAGE_Y);
 	}
 	
-	public static final int MESSAGE_X = 100;
 	public static final int MESSAGE_Y = 50;
 }
