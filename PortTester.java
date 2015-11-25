@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.*;
 import java.awt.font.*;
+import javax.imageio.*;
 
 /*
  * PortTester - GUI network tool for testing TCP-ports
@@ -28,17 +30,27 @@ class PortTesterFrame extends JFrame {
 		setLocationByPlatform(true);
 		
 		/*
-		 * Add header component:
+		 * Add foreground:
 		 */
-		HeaderComponent header = new HeaderComponent();
-		add(header);
+		ForegroundComponent foreground = new ForegroundComponent();
+		add(foreground);	
+		
 	}
 	
 	public static final int DEFAULT_WIDTH = 400;
 	public static final int DEFAULT_HEIGHT = 400;
 }
 
-class HeaderComponent extends JComponent {
+class ForegroundComponent extends JComponent {
+	public ForegroundComponent() {
+		try {
+			image = ImageIO.read(new File("port-tester.png"));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
@@ -53,10 +65,24 @@ class HeaderComponent extends JComponent {
 		FontRenderContext context = g2.getFontRenderContext();
 		Rectangle2D bounds = headerFont.getStringBounds(message, context);
 		
-		int paddingX = (int) (getWidth() - bounds.getWidth()) / 2;
+		int messageX = (int) (getWidth() - bounds.getWidth()) / 2;
 		
-		g2.drawString(message, paddingX, MESSAGE_Y);
+		g2.drawString(message, messageX, MESSAGE_Y);
+		
+		/*
+		 * Set image:
+		 */
+		if (image == null) return;
+		
+		int imageWidth = image.getWidth(this);
+		int imageHeight = image.getHeight(this);
+		
+		int imageX = (int) (getWidth() - imageWidth) / 2;
+		
+		g2.drawImage(image, imageX, IMAGE_Y, null);
 	}
 	
 	public static final int MESSAGE_Y = 50;
+	public static final int IMAGE_Y = 60;
+	private Image image;
 }
