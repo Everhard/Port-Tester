@@ -1,3 +1,3 @@
 # Port Tester
 
-Сетевая графическая утилита для тестирования TCP-портов.
+Crossplatform network GUI tool for testing TCP-ports.
